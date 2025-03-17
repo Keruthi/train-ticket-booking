@@ -1,0 +1,141 @@
+#include<stdio.h>
+#include<string.h>
+
+#define MAX_SEATS 50
+#define MAX_NAME_LENGTH 50
+
+struct booking{
+char name[MAX_NAME_LENGTH];
+int age;
+char source[MAX_NAME_LENGTH];
+char destination[MAX_NAME_LENGTH];
+int seat_number;
+int is_booked;
+};
+struct booking train[MAX_SEATS];
+void initializeseats(){
+for(int i=0; i<MAX_SEATS; i++)
+{
+train[i].is_booked=0;
+}
+}
+
+void displayavailableseats()
+{
+printf("available seats:");
+for(int i=0; i<MAX_SEATS; i++)
+{
+if(!train[i].is_booked)
+{
+printf("seat %d",i+1);
+}
+}
+}
+
+void bookseat()
+{
+int seat_number;
+printf("enter seat number to book:");
+scanf("%d",&seat_number);
+seat_number--;
+if(train[seat_number].is_booked)
+{
+printf("seat already booked");
+}
+else{
+train[seat_number].is_booked=1;
+train[seat_number].seat_number=seat_number+1;
+printf("enter passenger name: ");
+scanf("%s",&train[seat_number].name);
+printf("enter passenger age: ");
+scanf("%d",&train[seat_number].age);
+printf("enter the source: ");
+scanf("%s",&train[seat_number].source);
+printf("enter the destination: ");
+scanf("%s",&train[seat_number].destination);
+printf("seat booked successfully!");
+}
+}
+
+void cancelseat()
+{
+int seat_number;
+printf("Enter the seat number to be cancel booking: ");
+scanf("%d",&seat_number);
+seat_number--;
+if (seat_number < 0 || seat_number > MAX_SEATS)
+{
+printf("invalid seat number");
+return;
+}
+if (train[seat_number].is_booked)
+{
+train[seat_number].is_booked)=0;
+printf("seat booking cancelled successfully");
+}
+else{
+printf("seat is not booked");
+}
+}
+
+void printticket( int seat_number)
+{
+seat_number--;
+if(seat_number <0|| seat_number >= MAX_SEATS){
+printf("invalid seat number");
+return;
+}
+if(train[seat_number].is_booked){
+printf("ticket details:");
+printf("name: %s",train[seat_number].name);
+printf("age:%d",train[seat_number].age);
+printf("source: %s",train[seat_number].source);
+}
+else{
+printf("seat is not booked");
+}
+}
+
+
+
+int main(){
+initializeseats();
+int choice;
+do{
+printf("Train booking system");
+printf("1. display available seats");
+printf("2.book a seat");
+printf("3.cancel a seat bookinng");
+printf("4.print ticket");
+printf("5.exit");
+printf("enter your choice: ");
+scanf("%d",&choice);
+
+switch(choice)
+{
+case 1:
+displayavailableseats();
+break;
+case 2:
+bookseat();
+break;
+case 3:
+cancelseat();
+break;
+case 4:
+{
+int seat_number;
+printf("enter seat number to print ticket: ");
+scanf("%d",&seat_number);
+printticket(seat_number);
+break;
+}
+case 5:
+printf("exiting...");
+break;
+default:
+printf("invalid choice");
+}
+}while (choice!=5);
+return 0;
+}
